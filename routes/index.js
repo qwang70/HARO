@@ -1,66 +1,58 @@
 const express = require('express');
-const passport = require('passport');
-const Account = require('../models/account');
 const router = express.Router();
 
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('database.sqlite3');
+// initialize
+db.serialize(function() {
+    db.run("DROP TABLE IF EXISTS users;")
+    .run("CREATE TABLE IF NOT EXISTS users (\
+        id INTEGER PRIMARY KEY AUTOINCREMENT,\
+        username TEXT,\
+        password TEXT,\
+        email TEXT,\
+        title TEXT);")
+        .run("INSERT INTO users (username, password, email, title) \
+        VALUES ('admin', 'admin', 'admin@admin.com', 'volunteer'), \
+        ('qwang70', 'qwang70', 'qwang70@illinois.edu', 'passenger'), \
+        ('jping', 'jping', 'jping@gmail.com', 'volunteer')");
+    });
 
-router.get('/', (req, res) => {
-    res.render('index', { user : req.user });
-});
+router.post('/register', (req, res) => {
+    console.log( 'test register', req.body);
+    db.serialize(function() {
+        db.run("INSERT INTO users (username, password, email, title) VALUES (?, ?, ?, ?);", 
+            [req.body.username, req.body.password, req.body.email, req.body.title], function(err, row){
+            if (err){
+                console.error(err);
+                res.status(400);
+            }
 
-router.get('/register', (req, res) => {
-    res.render('register', { });
-});
-
-router.post('/register', (req, res, next) => {
-    Account.register(new Account({ username : req.body.username }), req.body.password, (err, account) => {
-        if (err) {
-          return res.render('register', { error : err.message });
-        }
-
-        passport.authenticate('local')(req, res, () => {
-            req.session.save((err) => {
-                if (err) {
-                    return next(err);
-                }
-                res.redirect('/');
-            });
+        });
+        db.get("SELECT id FROM users WHERE username = ?;", req.body.username, function(err, row){
+            if (err){
+                console.error(err);
+                res.status(409);
+            }
+            else {
+                res.status(201).json({id: row.id});
+            }
         });
     });
+    
 });
 
-
-router.get('/login', (req, res) => {
-    res.render('login', { user : req.user, error : req.flash('error')});
-});
-
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), (req, res, next) => {
-    req.session.save((err) => {
-        if (err) {
-            return next(err);
+router.post('/login', (req, res, next) => {
+    db.get("SELECT * FROM users WHERE email = ? and password = ?;", [req.body.email, req.body.password],
+     function(err, row){
+        if(row){
+            res.json({ "id" : row.id,
+            "username" : row.username });
         }
-        res.redirect('/');
-    });
-});
-
-router.get('/logout', (req, res, next) => {
-    req.logout();
-    req.session.save((err) => {
-        if (err) {
-            return next(err);
+        else{
+            res.status(404).json({error: "User does not exist"});
         }
-        res.redirect('/');
     });
-});
-
-router.get('/ping', (req, res) => {
-    res.json([{
-        id: 1,
-        username: "samsepi0l"
-    }, {
-        id: 2,
-        username: "D0loresH4ze"
-    }]);
 });
 
 module.exports = router;
