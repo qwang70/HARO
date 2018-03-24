@@ -25,7 +25,6 @@ router.get('/', (req, res) => {
     res.status(200).end();
 });
 router.get('/:userId/requests', (req, res, next) => {
-    console.log("request", req.params.userId);
     db.all("SELECT * FROM requests WHERE userId = ?;", [req.params.userId],
         function(err, rows){
         if(rows){
@@ -41,3 +40,19 @@ router.get('/:userId/requests', (req, res, next) => {
         }
     });
 });
+router.post('/:userId/requests', (req, res, next) => {
+    console.log("print body", req.body);
+    db.run("INSERT INTO requests (userId, status, resource, description, lat, lng) \
+            VALUES (?, 'requested', ?, ?, ?, ?)", 
+        [req.params.userId, req.body.resource, req.body.description, req.body.location.lat, req.body.location.lng],
+        function(err, row){
+        if(err){
+            res.status(409).json({error: "Something happened"});
+        }
+        else{
+            res.status(200).end();
+        }
+    });
+});
+
+module.exports = router;
