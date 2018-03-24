@@ -35,7 +35,7 @@ router.post('/register', (req, res) => {
                 res.status(409);
             }
             else {
-                res.status(201).json({id: row.id});
+                res.status(201).json({userId: row.id});
             }
         });
     });
@@ -46,8 +46,8 @@ router.post('/login', (req, res, next) => {
     db.get("SELECT * FROM users WHERE email = ? and password = ?;", [req.body.email, req.body.password],
      function(err, row){
         if(row){
-            res.json({ "id" : row.id,
-            "username" : row.username });
+            res.json({ userId : row.id,
+            username : row.username });
         }
         else{
             res.status(404).json({error: "User does not exist"});
