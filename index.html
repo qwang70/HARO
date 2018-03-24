@@ -21,15 +21,82 @@
   <body>
     <div id="map"></div>
     <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
-        });
+        var map;
+        function initMap() {
+            var uluru = {lat: -25.363, lng: 131.044};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: uluru
+            });
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map
+            });
+            geoJson = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "letter": "G",
+        "color": "blue",
+        "rank": "7",
+        "ascii": "71"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          
+            123.61, -22.14
+          
+        ]
       }
-        var drawingManager = new google.maps.drawing.DrawingManager();
-        drawingManager.setMap(map);
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "letter": "e",
+        "color": "red",
+        "rank": "5",
+        "ascii": "101"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [144.14, -27.41], [145.67, -27.52], [146.86, -27.09], [146.82, -25.64], [146.25, -25.04],
+            [145.45, -24.68], [144.66, -24.60], [144.09, -24.76], [143.43, -25.08], [142.99, -25.40],
+            [142.64, -26.03], [142.64, -27.05], [142.64, -28.26], [143.30, -29.11], [144.18, -29.57],
+            [145.41, -29.64], [146.46, -29.19], [146.64, -28.72], [146.82, -28.14], [144.84, -28.42],
+            [144.31, -28.26], [144.14, -27.41]
+          ],
+          [
+            [144.18, -26.39], [144.53, -26.58], [145.19, -26.62], [145.72, -26.35], [145.81, -25.91],
+            [145.41, -25.68], [144.97, -25.68], [144.49, -25.64], [144, -25.99], [144.18, -26.39]
+          ]
+        ]
+      }
+    }
+  ]
+};
+            map.data.addGeoJson(geoJson)
+            map.data.setStyle(function() {
+                return {
+                    icon: getCircle()
+                };
+            });
+        }
+        function getCircle() {
+            return {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: 'red',
+                fillOpacity: .2,
+                scale: 200,
+                strokeColor: 'white',
+                strokeWeight: .5
+            };
+        }
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCe4FY21-DdAigNV938UajjrPLlRP0t_4&callback=initMap&libraries=drawing"
     async defer></script>
