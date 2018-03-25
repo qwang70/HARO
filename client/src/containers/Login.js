@@ -27,7 +27,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className='container'>
+      <div>
         <PageHeader>Login</PageHeader>
         <Form horizontal>
           <FormGroup controlId="formHorizontalEmail">
@@ -73,7 +73,7 @@ class Login extends Component {
 
 const mapStateToProps = state => { return {} }
 const mapDispatchToProps = dispatch => ({
-  registerUser: userInfo => dispatch(loginUser(userInfo))
+  loginUser: userInfo => dispatch(loginUser(userInfo))
 })
 
 
