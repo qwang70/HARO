@@ -25,7 +25,7 @@ function showInfo(e, map, directionsDisplay){
 function calcRoute(start, end, directionsDisplay) {
   var request = {
     // origin: start,
-    start: {lat:40.693827, lng: -73.986884},
+    origin: {lat:40.693827, lng: -73.986884},
     destination: end,
     travelMode: 'WALKING'
   };
