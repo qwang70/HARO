@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import {
-  ListGroup, ListGroupItem, Button
+  ListGroup, ListGroupItem, Button, PageHeader
 } from 'react-bootstrap'
 
 class AllRequests extends Component {
@@ -20,6 +20,7 @@ class AllRequests extends Component {
   render() {
     return (
       <div>
+        <PageHeader>Current Available Requests</PageHeader>
         <ListGroup>
           <ListGroupItem header='A Blanket'>
             <Button onClick={this.handleTake} bsStyle={this.state.btn}>

@@ -73,13 +73,14 @@ function getMaterials(userId) {
 
 function shouldGetMaterials(state) {
   const materials = state.materials
-  if (!materials.items) {
-    return true
-  } else if (materials.isFetching) {
-    return false
-  } else {
-    return materials.isOutdated
-  }
+  // if (!materials.items) {
+  //   return true
+  // } else if (materials.isFetching) {
+  //   return false
+  // } else {
+  //   return materials.isOutdated
+  // }
+  return true
 }
 
 export function refreshMaterials(userId) {

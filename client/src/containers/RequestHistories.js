@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getMaterialsIfNecessary } from '../actions'
 
 import {
-  ListGroup, ListGroupItem
+  ListGroup, ListGroupItem, PageHeader, Button
 } from 'react-bootstrap'
 
 class RequestHistories extends Component {
@@ -28,9 +28,13 @@ class RequestHistories extends Component {
     )
     return (
       <div>
+        <PageHeader>Relief supplies Request History</PageHeader>
         <ListGroup>
           {items}
         </ListGroup>
+        <Button onClick={e => this.props.getMaterialsIfNecessary(2)} >
+              Refresh
+        </Button>
       </div>
     )
   }
