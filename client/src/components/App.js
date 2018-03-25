@@ -24,9 +24,9 @@ const App = ({ match }) => (
           <NavItem eventKey='2'>Histories</NavItem>
         </LinkContainer>
         <LinkContainer to='/all'>
-          <NavItem eventKey='3'>All</NavItem>
+          <NavItem eventKey='3'>All Requests</NavItem>
         </LinkContainer>
-        <NavItem href='../index.html' eventKey='4'>Map</NavItem>
+        <NavItem href='/Users/wangqiwen/Documents/github/HARO/index.html' eventKey='4'>Map</NavItem>
       </Nav>
       <Nav pullRight>
         <LinkContainer to='/register'>
@@ -38,7 +38,18 @@ const App = ({ match }) => (
       </Nav>
     </Navbar>
     <div className='container'>
-      <Route exact path={`${match.url}`} render={() => <h1>Hello</h1>} />
+      <Route exact path={`${match.url}`} render={() => (
+      <div>
+      <h1>HARO Project: Help people find A Resource Out</h1>
+      <h3>Senario: </h3>
+      <h4>Recently, a magnitude-4.1 earthquake has struck in New York City about seven miles.</h4> 
+      <h4>Tons of buildings, especially wooden buildings have been destroyed. </h4>
+      <h4>Many people become homeless because of that. The relief rescue supplies haven't reached out to them. </h4>
+      <h4>A lot of them are very close to you! Are you willing to provide them some resources?")</h4>
+      </div>
+      )
+      
+      }/>
       <Route path='/register' component={Register} />
       <Route path='/login' component={Login} />
       <Route path='/request' component={RequestMaterial} />

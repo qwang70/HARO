@@ -82,6 +82,7 @@ function initMap() {
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
+      alert("Senario: Recently, a magnitude-4.1 earthquake has struck in New York City about seven miles. \nTons of buildings, especially wooden buildings have been destroyed. \nMany people become homeless because of that. The relief rescue supplies haven't reached out to them. \nA lot of them are very close to you! Are you willing to provide them some resources?");
       navigator.geolocation.getCurrentPosition(function(position) {
         var pos = {
           lat: position.coords.latitude,
