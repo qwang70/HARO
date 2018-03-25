@@ -18,7 +18,7 @@ function userId(state = '', action) {
   }
 }
 
-function entities(state = {}, action) {
+function entities(state = {materials: []}, action) {
   switch (action.type) {
     case GET_MATERIALS_SUCCESS:
       return Object.assign({}, state, {
@@ -38,6 +38,7 @@ function materials(state = {}, action) {
         isOutdated: false
       })
     case GET_MATERIALS_SUCCESS:
+      console.log(action)
       return Object.assign({}, state, {
         isFetching: false,
         isOutdated: false,

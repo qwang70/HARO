@@ -2,6 +2,8 @@ export const REGISTRATION_REQUEST = 'REGISTRATION_REQUEST'
 export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS'
 export const LOGIN_REQUEST = 'LOGON_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const POST_MATERIALS_REQUEST = 'POST_MATERIALS_REQUEST'
+export const POST_MATERIALS_SUCCESS = 'POST_MATERIALS_SUCCESS'
 export const GET_MATERIALS_REQUEST = 'GET_MATERIALS_REQUEST'
 export const GET_MATERIALS_SUCCESS = 'GET_MATERIALS_SUCCESS'
 export const REFRESH_MATERIALS = 'REFRESH_MATERIALS'
@@ -13,23 +15,23 @@ function registrationRequest() {
 }
 
 function registrationSuccess(json) {
-  console.log(json.userId)
   return {
     type: REGISTRATION_SUCCESS,
     userId: json.userId
   }
 }
 
-function loginRequest(json) {
+function loginRequest() {
   return {
     type: LOGIN_REQUEST,
-    userId: json.userId
   }
 }
 
-function loginSuccess() {
+function loginSuccess(json) {
+  console.log(json.userId)
   return {
-    type: LOGIN_SUCCESS
+    type: LOGIN_SUCCESS,
+    userId: json.userId
   }
 }
 
@@ -46,10 +48,23 @@ function getMaterialsSuccess(json) {
   }
 }
 
+function postMaterialsRequest() {
+  return {
+    type: POST_MATERIALS_REQUEST
+  }
+}
+
+function postMaterialsSuccess(json) {
+  return {
+    type: POST_MATERIALS_SUCCESS,
+    materials: json
+  }
+}
+
 function getMaterials(userId) {
   return dispatch => {
     dispatch(getMaterialsRequest())
-    return fetch(`/users/${userId}/requests`)
+    return fetch(`/users/${userId}/materials`)
       .then(res => res.json())
       .then(json => dispatch(getMaterialsSuccess(json)))
   }
@@ -57,7 +72,7 @@ function getMaterials(userId) {
 
 function shouldGetMaterials(state) {
   const materials = state.materials
-  if (!materials) {
+  if (!materials.items) {
     return true
   } else if (materials.isFetching) {
     return false
@@ -68,7 +83,7 @@ function shouldGetMaterials(state) {
 
 export function refreshMaterials(userId) {
   return {
-    type: refreshMaterials    
+    type: refreshMaterials
   }
 }
 
@@ -95,22 +110,21 @@ export function registerUser(userInfo) {
   }
 }
 
-export function requestMaterial(userInfo){
-  return dispatch => {
-    dispatch(getMaterialsRequest())
-    //TODO: change 2 to be the sotred user id
-    return fetch('/users/2/materials', {
+export function requestMaterial(material) {
+  return (dispatch, getState) => {
+    let userId = getState().userId
+    dispatch(postMaterialsRequest())
+    return fetch(`/users/${userId}/materials`, {
       method: 'POST',
-      body: JSON.stringify(userInfo),
+      body: JSON.stringify(material),
       headers: new Headers({
         'Content-Type': 'application/json'
       })
-      }).then(res => res.json())
-      .then(json => dispatch(getMaterialsRequest()))
+    }).then(res => res.json())
+      .then(json => dispatch(postMaterialsSuccess()))
   }
 }
 export function loginUser(userInfo) {
-  console.log(userInfo)
   return dispatch => {
     dispatch(loginRequest())
     return fetch('/login', {
@@ -119,7 +133,11 @@ export function loginUser(userInfo) {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
-    }).then(res => res.json())
-      .then(json => dispatch(loginSuccess(json)))
+    }).then(
+      res => {
+        if (res.ok) {
+          return res.json()
+        }
+      }).then(json => dispatch(loginSuccess(json)))
   }
 }
