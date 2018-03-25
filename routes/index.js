@@ -5,6 +5,7 @@ var sqlite3 = require('sqlite3').verbose();
 
 var db = new sqlite3.Database('database.sqlite3');
 // initialize
+console.log("users initialization");
 db.serialize(function() {
     db.run("DROP TABLE IF EXISTS users;")
     .run("CREATE TABLE IF NOT EXISTS users (\
@@ -16,7 +17,10 @@ db.serialize(function() {
         .run("INSERT INTO users (username, password, email, title) \
         VALUES ('admin', 'admin', 'admin@admin.com', 'volunteer'), \
         ('qwang70', 'qwang70', 'qwang70@illinois.edu', 'passenger'), \
-        ('jping', 'jping', 'jping@gmail.com', 'volunteer')");
+        ('julie', 'qwang70', 'julie@gmail.com', 'passenger'), \
+        ('cuteGirl', 'cugi', 'cuteGirl@gmail.com', 'passenger'), \
+        ('jping', 'jping', 'jping@gmail.com', 'volunteer'),\
+        ('goodGuy', 'gdgy', 'goodGuy@gmail.com', 'volunteer');");
     });
 
 router.post('/register', (req, res) => {
