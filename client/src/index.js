@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './components/Root';
-import { createStore } from 'redux'
+import configStore from './configStore'
 import registerServiceWorker from './registerServiceWorker';
 
-function tempReducer(state = {}, action) {
-  return state
-}
-
-let store = createStore(tempReducer)
+let store = configStore()
 ReactDOM.render(<Root store={store} />, document.getElementById('root'));
 registerServiceWorker();
