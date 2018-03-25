@@ -95,6 +95,20 @@ export function registerUser(userInfo) {
   }
 }
 
+export function requestMaterial(userInfo){
+  return dispatch => {
+    dispatch(getMaterialsRequest())
+    //TODO: change 2 to be the sotred user id
+    return fetch('/users/2/materials', {
+      method: 'POST',
+      body: JSON.stringify(userInfo),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+      }).then(res => res.json())
+      .then(json => dispatch(getMaterialsRequest()))
+  }
+}
 export function loginUser(userInfo) {
   console.log(userInfo)
   return dispatch => {

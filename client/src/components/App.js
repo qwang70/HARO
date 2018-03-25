@@ -18,6 +18,13 @@ const App = ({ match }) => (
         <LinkContainer to='/login'>
           <NavItem eventKey='2'>Login</NavItem>
         </LinkContainer>
+
+        <LinkContainer to='/reqMat'>
+          <NavItem eventKey='3'>Request Material</NavItem>
+        </LinkContainer>
+        <LinkContainer to='/list'>
+          <NavItem eventKey='4'>List Request</NavItem>
+        </LinkContainer>
       </Nav>
     </Navbar>
     <Route path={`${match.url}`} render={() => <h1>Hello</h1>} />

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { registerUser } from '../actions'
 import {
-  Form, FormControl, Col, FormGroup, ControlLabel, Button, PageHeader
+  Form, FormControl, Col, FormGroup, ControlLabel, Button, PageHeader, ButtonToolbar
 } from 'react-bootstrap'
 
 class Register extends Component {
@@ -71,14 +71,26 @@ class Register extends Component {
           </FormGroup>
           <FormGroup>
             <Col smOffset={2} sm={10}>
+            <ButtonToolbar>
               <Button
                 onClick={(e) => {
                   e.preventDefault();
-                  this.props.registerUser(this.state)
+                  this.setState({title: 'provider'});
+                  this.props.registerUser(this.state);
                 }}
                 type="submit">
-                Register
+                Register Resource Provider
               </Button>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.setState({title: 'seeker'});
+                  this.props.registerUser(this.state);
+                }}
+                type="submit">
+                Register Resource Seeker
+              </Button>
+              </ButtonToolbar>
             </Col>
           </FormGroup>
         </Form>
