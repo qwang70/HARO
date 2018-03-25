@@ -1,30 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { registerUser } from '../actions'
+import { loginUser } from '../actions'
 import {
   Form, FormControl, Col, FormGroup, ControlLabel, Button, PageHeader
 } from 'react-bootstrap'
 import { withRouter } from 'react-router-dom'
 
-class Register extends Component {
+class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
       email: '',
-      username: '',
       password: ''
     }
     this.handleEmailChange = this.handleEmailChange.bind(this)
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
-    this.handleUsernameChange = this.handleUsernameChange.bind(this)
   }
 
   handleEmailChange(e) {
     this.setState({ email: e.target.value })
-  }
-
-  handleUsernameChange(e) {
-    this.setState({ username: e.target.value })
   }
 
   handlePasswordChange(e) {
@@ -34,7 +28,7 @@ class Register extends Component {
   render() {
     return (
       <div className='container'>
-        <PageHeader>Register</PageHeader>
+        <PageHeader>Login</PageHeader>
         <Form horizontal>
           <FormGroup controlId="formHorizontalEmail">
             <Col componentClass={ControlLabel} sm={2}>
@@ -47,18 +41,6 @@ class Register extends Component {
                 placeholder="Email" />
             </Col>
           </FormGroup>
-          <FormGroup controlId="formHorizontalUserName">
-            <Col componentClass={ControlLabel} sm={2}>
-              Username
-          </Col>
-            <Col sm={10}>
-              <FormControl
-                type="text"
-                onChange={this.handleUsernameChange}
-                placeholder="Username" />
-            </Col>
-          </FormGroup>
-
           <FormGroup controlId="formHorizontalPassword">
             <Col componentClass={ControlLabel} sm={2}>
               Password
@@ -75,7 +57,7 @@ class Register extends Component {
               <Button
                 onClick={(e) => {
                   e.preventDefault();
-                  this.props.registerUser(this.state)
+                  this.props.loginUser(this.state)
                 }}
                 type="submit">
                 Register
@@ -91,9 +73,9 @@ class Register extends Component {
 
 const mapStateToProps = state => { }
 const mapDispatchToProps = dispatch => ({
-  registerUser: userInfo => dispatch(registerUser(userInfo))
+  registerUser: userInfo => dispatch(loginUser(userInfo))
 })
 
-const RegisterPage = connect(mapStateToProps, mapDispatchToProps)(Register)
 
-export default RegisterPage
+const LoginPage = connect(mapStateToProps, mapDispatchToProps)(Login)
+export default LoginPage
