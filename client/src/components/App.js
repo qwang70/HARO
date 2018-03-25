@@ -6,6 +6,7 @@ import RequestMaterial from '../containers/RequestMaterial'
 import RequestHistories from '../containers/RequestHistories'
 import Register from '../containers/Register'
 import Login from '../containers/Login'
+import AllRequests from '../containers/AllRequests.js'
 
 const App = ({ match }) => (
   <div>
@@ -22,13 +23,17 @@ const App = ({ match }) => (
         <LinkContainer to='/histories'>
           <NavItem eventKey='2'>Histories</NavItem>
         </LinkContainer>
+        <LinkContainer to='/all'>
+          <NavItem eventKey='3'>All</NavItem>
+        </LinkContainer>
+        <NavItem href='../index.html' eventKey='4'>Map</NavItem>
       </Nav>
       <Nav pullRight>
         <LinkContainer to='/register'>
-          <NavItem eventKey='3'>Register</NavItem>
+          <NavItem eventKey='5'>Register</NavItem>
         </LinkContainer>
         <LinkContainer to='/login'>
-          <NavItem eventKey='4'>Login</NavItem>
+          <NavItem eventKey='6'>Login</NavItem>
         </LinkContainer>
       </Nav>
     </Navbar>
@@ -38,6 +43,7 @@ const App = ({ match }) => (
       <Route path='/login' component={Login} />
       <Route path='/request' component={RequestMaterial} />
       <Route path='/histories' component={RequestHistories} />
+      <Route path='/all' component={AllRequests} />
     </div>
   </div>
 )

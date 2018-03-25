@@ -38,7 +38,6 @@ function materials(state = {}, action) {
         isOutdated: false
       })
     case GET_MATERIALS_SUCCESS:
-      console.log(action)
       return Object.assign({}, state, {
         isFetching: false,
         isOutdated: false,

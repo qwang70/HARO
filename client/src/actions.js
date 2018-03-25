@@ -64,7 +64,8 @@ function postMaterialsSuccess(json) {
 function getMaterials(userId) {
   return dispatch => {
     dispatch(getMaterialsRequest())
-    return fetch(`/users/${userId}/materials`)
+    //TODO hardcode
+    return fetch(`/users/2/materials`)
       .then(res => res.json())
       .then(json => dispatch(getMaterialsSuccess(json)))
   }
