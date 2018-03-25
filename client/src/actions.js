@@ -16,6 +16,7 @@ function registrationSuccess(json) {
 }
 
 export function registerUser(userInfo) {
+  console.log(userInfo)
   return dispatch => {
     dispatch(registrationRequest())
     return fetch('/register', {
@@ -27,4 +28,8 @@ export function registerUser(userInfo) {
     }).then(res => res.json())
     .then(json => dispatch(registrationSuccess(json)))
   }
+}
+
+export function loginUser(userInfo) {
+  return {}
 }
