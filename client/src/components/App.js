@@ -20,7 +20,7 @@ const App = ({ match }) => (
         </LinkContainer>
       </Nav>
     </Navbar>
-    {/* <Route path={`${match.url}`} render={() => <h1>Hello</h1>} /> */}
+    <Route path={`${match.url}`} render={() => <h1>Hello</h1>} />
   </div>
 )
 

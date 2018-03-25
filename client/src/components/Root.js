@@ -8,11 +8,11 @@ import Login from '../containers/Login'
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router>
-      <div>
-        <Route path='/' component={App} />
+      <Switch>
+        <Route exact path='/' component={App} />
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
-      </div>
+      </Switch>
     </Router>
   </Provider>
 )

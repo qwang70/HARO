@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { loginUser } from '../actions'
 import {
-  Form, FormControl, Col, FormGroup, ControlLabel, Button, PageHeader
+  Form, FormControl, Col, FormGroup,
+  ControlLabel, Button, PageHeader
 } from 'react-bootstrap'
-import { withRouter } from 'react-router-dom'
 
 class Login extends Component {
   constructor(props) {
@@ -60,7 +60,7 @@ class Login extends Component {
                   this.props.loginUser(this.state)
                 }}
                 type="submit">
-                Register
+                Login
               </Button>
             </Col>
           </FormGroup>
@@ -71,7 +71,7 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => { }
+const mapStateToProps = state => { return {} }
 const mapDispatchToProps = dispatch => ({
   registerUser: userInfo => dispatch(loginUser(userInfo))
 })
