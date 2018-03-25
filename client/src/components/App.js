@@ -22,7 +22,7 @@ const App = ({ match }) => (
         <LinkContainer to='/reqMat'>
           <NavItem eventKey='3'>Request Material</NavItem>
         </LinkContainer>
-        <LinkContainer to='/list'>
+        <LinkContainer to='/listAllReq'>
           <NavItem eventKey='4'>List Request</NavItem>
         </LinkContainer>
       </Nav>

@@ -14,12 +14,12 @@ db.serialize(function() {
         email TEXT,\
         title TEXT);")
         .run("INSERT INTO users (username, password, email, title) \
-        VALUES ('admin', 'admin', 'admin@admin.com', 'volunteer'), \
-        ('qwang70', 'qwang70', 'qwang70@illinois.edu', 'passenger'), \
-        ('julie', 'qwang70', 'julie@gmail.com', 'passenger'), \
-        ('cuteGirl', 'cugi', 'cuteGirl@gmail.com', 'passenger'), \
-        ('jping', 'jping', 'jping@gmail.com', 'volunteer'),\
-        ('goodGuy', 'gdgy', 'goodGuy@gmail.com', 'volunteer');");
+        VALUES ('admin', 'admin', 'admin@admin.com', 'provider'), \
+        ('qwang70', 'qwang70', 'qwang70@illinois.edu', 'seeker'), \
+        ('julie', 'qwang70', 'julie@gmail.com', 'seeker'), \
+        ('cuteGirl', 'cugi', 'cuteGirl@gmail.com', 'seeker'), \
+        ('jping', 'jping', 'jping@gmail.com', 'provider'),\
+        ('goodGuy', 'gdgy', 'goodGuy@gmail.com', 'provider');");
     });
 
 router.post('/register', (req, res) => {

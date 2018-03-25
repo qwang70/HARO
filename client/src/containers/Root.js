@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import App from '../components/App'
 import UserPage from '../components/UserPage'
 import RequestMaterial from '../components/RequestMaterial'
+import ListAllRequest from '../components/ListAllRequest'
 import Register from '../containers/Register'
 import Login from '../containers/Login'
 
@@ -16,6 +17,7 @@ const Root = ({ store }) => (
         <Route path='/login' component={Login} />
         <Route path='/user' component={UserPage} />
         <Route path='/reqMat' component={RequestMaterial} />
+        <Route path='/listAllReq' component={ListAllRequest} />
       </Switch>
     </Router>
   </Provider>

@@ -66,7 +66,7 @@ router.post('/materials', (req, res, next) => {
             res.status(409).json({error: "Something happened"});
         }
         else{
-            res.status(200).end();
+            res.status(200).json({});
         }
     });
 });
