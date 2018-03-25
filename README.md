@@ -38,10 +38,10 @@ NYU Hackathon 2018
     * Content: `{error: "User does not exist"}`
 
 ## Resource Request
-### Get requests status 
+### Get materials status 
 * **URL**
 
-    `/requests`
+    `/materials`
 * **Method**
 
     `GET`
@@ -56,7 +56,7 @@ NYU Hackathon 2018
 ### Post a request
 * **URL**
 
-    `/requests`
+    `/materials`
 * **Method**
 
     `POST`
