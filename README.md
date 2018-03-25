@@ -37,17 +37,34 @@ NYU Hackathon 2018
     * Code: `404`
     * Content: `{error: "User does not exist"}`
 
-## Resource Request
-### Get materials status 
+## Get User Info
+
 * **URL**
 
-    `/materials`
+    `/users/:userId`
 * **Method**
 
     `GET`
 * **Success Response**
     * Code: `200`
-    * Content: `{[{requestId: 12, status: "Rejected", resource: "Apple", description: "Many"}, {...}]}`
+    * Content: `{id 1, username julie, password secret, email email@gmail.com, title volunteer}`
+
+* **Error Response**
+    * Code: `404`
+    * Content: `{error: "User does not exist"}`
+    
+
+## Resource Request
+### Get materials status 
+* **URL**
+
+    `/users/:userId/materials`
+* **Method**
+
+    `GET`
+* **Success Response**
+    * Code: `200`
+    * Content: `{[{materialId: 12, status: "requested", resource: "Apple", description: "Many"}, {...}]}`
 
 * **Error Response**
     * Code: `404`
@@ -56,7 +73,7 @@ NYU Hackathon 2018
 ### Post a request
 * **URL**
 
-    `/materials`
+    `/users/:userId/materials`
 * **Method**
 
     `POST`
@@ -70,17 +87,19 @@ NYU Hackathon 2018
     * Code: `409`
     * Content: `{error: "Something happened"}`
 
-### Delete a Playlist
+### Deliver materials 
 * **URL**
 
-    `api/playlists/:id`
+    `/users/:userId/materials/:materialId`
 * **Method**
 
-    `DELETE`
+    `PUT`
+* **Body**
+    `{status: delivering/delivered}`
 * **Success Response**
     * Code: `200`
-    * Content: `Delete Success`
+    * Content: `{requestId: 12, userId:2, providerId:1, status: "delivering", resource: "Apple", description: "Many"}`
 
 * **Error Response**
     * Code: `404`
-    * Content: `{error: user or list does not exist}`
+    * Content: `{error: "Something happened"}`
