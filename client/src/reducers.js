@@ -18,7 +18,7 @@ function userId(state = '', action) {
   }
 }
 
-function entities(state = {}, action) {
+function entities(state = {materials: []}, action) {
   switch (action.type) {
     case GET_MATERIALS_SUCCESS:
       return Object.assign({}, state, {

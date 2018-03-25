@@ -32,7 +32,7 @@ class Register extends Component {
 
   render() {
     return (
-      <div className='container'>
+      <div>
         <PageHeader>Register</PageHeader>
         <Form horizontal>
           <FormGroup controlId="formHorizontalEmail">
@@ -71,36 +71,35 @@ class Register extends Component {
           </FormGroup>
           <FormGroup>
             <Col smOffset={2} sm={10}>
-            <ButtonToolbar>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.setState({title: 'provider'});
-                  this.props.registerUser(this.state);
-                }}
-                type="submit">
-                Register Resource Provider
+              <ButtonToolbar>
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.setState({ title: 'provider' });
+                    this.props.registerUser(this.state);
+                  }}
+                  type="submit">
+                  Register Resource Provider
               </Button>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.setState({title: 'seeker'});
-                  this.props.registerUser(this.state);
-                }}
-                type="submit">
-                Register Resource Seeker
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.setState({ title: 'seeker' });
+                    this.props.registerUser(this.state);
+                  }}
+                  type="submit">
+                  Register Resource Seeker
               </Button>
               </ButtonToolbar>
             </Col>
           </FormGroup>
         </Form>
-
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {return {}}
+const mapStateToProps = state => { return {} }
 const mapDispatchToProps = dispatch => ({
   registerUser: userInfo => dispatch(registerUser(userInfo))
 })

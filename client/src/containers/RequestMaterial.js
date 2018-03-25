@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
 import { requestMaterial } from '../actions'
 
 import {
@@ -18,8 +17,9 @@ class RequestMaterial extends Component {
       description: '',
       // TODO: change lat, lng based on the stored lat, lng
       location: {
-          lat: 40,
-          lng: 50}
+        lat: 40,
+        lng: 50
+      }
     }
     this.handleResourceChange = this.handleResourceChange.bind(this)
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
@@ -35,25 +35,25 @@ class RequestMaterial extends Component {
 
   render() {
     return (
-      <div className='container'>
+      <div>
         <PageHeader>Relief supplies Request</PageHeader>
         <Form horizontal>
           <FormGroup controlId="formHorizontalResource">
-            
-              <ControlLabel>Relief supplies needed</ControlLabel>
-              <FormControl
-                type="resource"
-                onChange={this.handleResourceChange}
-                placeholder="Resource" />
+
+            <ControlLabel>Relief supplies needed</ControlLabel>
+            <FormControl
+              type="text"
+              onChange={this.handleResourceChange}
+              placeholder="Resource" />
           </FormGroup>
 
           <FormGroup controlId="formHorizontalPassword">
 
-              <ControlLabel>Reason for requesting the relief supplies</ControlLabel>
-              <FormControl
-                type="description"
-                onChange={this.handleDescriptionChange}
-                placeholder="Description" />
+            <ControlLabel>Reason for requesting the relief supplies</ControlLabel>
+            <FormControl
+              type="text"
+              onChange={this.handleDescriptionChange}
+              placeholder="Description" />
           </FormGroup>
           <FormGroup>
             <ButtonToolbar>
@@ -65,7 +65,7 @@ class RequestMaterial extends Component {
                 type="submit">
                 Send Request to Nearby People
               </Button>
-              </ButtonToolbar>
+            </ButtonToolbar>
           </FormGroup>
         </Form>
 
@@ -75,10 +75,12 @@ class RequestMaterial extends Component {
 }
 
 
-const mapStateToProps = state => {return {}}
+const mapStateToProps = state => { return {} }
 const mapDispatchToProps = dispatch => ({
-  requestMaterial: userInfo => dispatch(requestMaterial(userInfo))
+  requestMaterial: material => dispatch(requestMaterial(material))
 })
 
-const RequestMaterialPage = connect(mapStateToProps, mapDispatchToProps)(RequestMaterial)
+const RequestMaterialPage = connect(
+  mapStateToProps,
+  mapDispatchToProps)(RequestMaterial)
 export default RequestMaterialPage
