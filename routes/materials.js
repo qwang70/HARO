@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('database.sqlite3');
@@ -7,8 +7,9 @@ var db = new sqlite3.Database('database.sqlite3');
 db.serialize(function() {
     db.run("DROP TABLE IF EXISTS materials;")
     .run("CREATE TABLE IF NOT EXISTS materials (\
-        requestId INTEGER PRIMARY KEY AUTOINCREMENT,\
+        materialId INTEGER PRIMARY KEY AUTOINCREMENT,\
         userId INTEGER, \
+        providerId INTEGER, \
         status TEXT,\
         resource TEXT,\
         description TEXT,\
@@ -26,27 +27,36 @@ db.serialize(function() {
         (4, 'requested', 'diaper', 'badly in need of diaper',\
         40.711749, -73.985875)");
     });
-router.get('/', (req, res) => {
-    console.log("user");
-    res.status(200).end();
-});
-router.get('/:userId/materials', (req, res, next) => {
-    db.all("SELECT * FROM materials WHERE userId = ?;", [req.params.userId],
+    
+// get all materials
+router.get('/allMaterials', (req, res, next) => {
+    db.all("SELECT * FROM materials;",
         function(err, rows){
         if(rows){
             res.status(200).json(rows);
-            // res.json({ "requestId" : row.requestId,
-            // "status" : row.status,
-            // "resource": row.resource,
-            // "description": row.description}
-        // );
         }
         else{
             res.status(404).json({error: "No request for the user."});
         }
     });
 });
-router.post('/:userId/materials', (req, res, next) => {
+    
+// get materials requested by the user
+router.get('/materials', (req, res, next) => {
+    db.all("SELECT * FROM materials WHERE userId = ?;", [req.params.userId],
+        function(err, rows){
+        if(rows){
+            res.status(200).json(rows);
+        }
+        else{
+            res.status(404).json({error: "No request for the user."});
+        }
+    });
+});
+
+
+// post the material by the user
+router.post('/materials', (req, res, next) => {
     console.log("print body", req.body);
     db.run("INSERT INTO materials (userId, status, resource, description, lat, lng) \
             VALUES (?, 'requested', ?, ?, ?, ?)", 
@@ -58,6 +68,31 @@ router.post('/:userId/materials', (req, res, next) => {
         else{
             res.status(200).end();
         }
+    });
+});
+
+// deliver the material by the user
+router.put('/materials/:materialId', (req, res, next) => {
+    db.serialize(function() {
+        db.run("UPDATE materials \
+            SET status = ?,\
+            providerId = ? \
+            WHERE materialId = ?;", 
+            [req.body.status, req.params.userId, req.params.materialId],
+            function(err, row){
+            if(err){
+                res.status(404).json({error: "Something happened"});
+            }
+        })
+        .get("SELECT * FROM materials WHERE materialId = ?;", req.params.materialId,
+        function(err, row){
+            if(err){
+                res.status(404).json({error: "Something happened"});
+            }
+            else if(row){
+                res.status(200).json(row);
+            };
+        });
     });
 });
 

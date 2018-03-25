@@ -5,7 +5,6 @@ var sqlite3 = require('sqlite3').verbose();
 
 var db = new sqlite3.Database('database.sqlite3');
 // initialize
-console.log("users initialization");
 db.serialize(function() {
     db.run("DROP TABLE IF EXISTS users;")
     .run("CREATE TABLE IF NOT EXISTS users (\
@@ -53,6 +52,19 @@ router.post('/login', (req, res, next) => {
         if(row){
             res.json({ userId : row.id,
             username : row.username });
+        }
+        else{
+            res.status(404).json({error: "User does not exist"});
+        }
+    });
+});
+
+
+router.get('/users/:userId', (req, res, next) => {
+    db.get("SELECT * FROM users WHERE id = ?;", [req.params.userId],
+     function(err, row){
+        if(row){
+            res.json(row);
         }
         else{
             res.status(404).json({error: "User does not exist"});
