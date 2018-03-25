@@ -1,136 +1,84 @@
-// var sqlite3 = require('sqlite3').verbose();
-// var db = new sqlite3.Database('database.sqlite3');
-
-// var map;
-// function initMap( currloc={lat: -25.363, lng: 131.044} ) {
-//     //var uluru = {lat: -25.363, lng: 131.044};
-//     var map = new google.maps.Map(document.getElementById('map'), {
-//         zoom: 13,
-//         center: currloc
-//     });
-//     var marker = new google.maps.Marker({
-//         position: currloc,
-//         map: map
-//     });
-//     geoJson = {
-//   "type": "FeatureCollection",
-//   "features": [
-//     {
-//       "type": "Feature",
-//       "properties": {
-//         "letter": "G",
-//         "color": "blue",
-//         "rank": "7",
-//         "ascii": "71"
-//       },
-//       "geometry": {
-//         "type": "Point",
-//         "coordinates": [
-//             123.61, -22.14
-//         ]
-//       }
-//     }
-//   ]
-// };
-//     map.data.addGeoJson(geoJson)
-//     map.data.setStyle(function() {
-//         return {
-//             icon: getCircle()
-//         };
-//     });
-// }
-
 // current user location
 function getCircle() {
     return {
         path: google.maps.SymbolPath.CIRCLE,
         fillColor: 'blue',
         fillOpacity: .2,
-        scale: 50,
+        scale: 20,
         strokeColor: 'white',
         strokeWeight: .5
     };
 }
-
-// function geoFindMe() {
-//     console.log("geoFindMe");
-//     var output = document.getElementById("map");
-  
-//     function success(position) {
-//         console.log("success");
-//         var latitude  = position.coords.latitude;
-//         var longitude = position.coords.longitude;
-//         initMap({lat: latitude, lng: longitude});
-//     }
-
-//     function error() {
-//         console.log("error");
-//         output.innerHTML = "Unable to retrieve your location";
-//         initMap();
-//     }
-//     if (!navigator.geolocation){
-//       output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
-//       return;
-//     }
-  
-  
-//     navigator.geolocation.getCurrentPosition(success, error);
-// }
+function showInfo(e, map, directionsDisplay){
+    var infoWindow = new google.maps.InfoWindow({map: map});
+    var feature = e.feature.f;
+    infoWindow.setPosition(e.latLng);
+    infoWindow.setContent('<div><strong>'+ feature.username + 
+      "</strong> need a <strong>"+ feature.resource + 
+      "</strong></br>Message: "+feature.description + 
+      '</br></br><button style=\"background-color: #4CAF50; /* Green */\
+      border: none;\
+      color: white;\" type=\"button\" onclick=\"alert(\'Request Taken\')\">\
+      Deliver the resource to her</button></div>');
+    calcRoute(map.center, e.latLng);
+}
+function calcRoute(start, end, directionsDisplay) {
+  var request = {
+    // origin: start,
+    start: {lat:40.693827, lng: -73.986884},
+    destination: end,
+    travelMode: 'WALKING'
+  };
+  var self = this;
+  var directionsService = new google.maps.DirectionsService();
+  directionsService.route(request, function(result, status) {
+    if (status == 'OK') {
+      self.directionsDisplay.setDirections(result);
+    }
+  });
+}
 
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
+      center: {lat: 40.6935413, lng: -73.9651478},
       zoom: 13
     });
-    var f = new google.maps.Data.Feature([
-        {geometry: new google.maps.LatLng({lat: 40.693552, lng: -73.965132}), id: 1, properties: {}},
-        {geometry: new google.maps.LatLng({lat: 40.693552, lng: -73.98}), id: 2, properties: {}},
-        {geometry: new google.maps.LatLng({lat: 40.7, lng: -73.98}), id: 3, properties: {}}
-    ]);
-    map.data.add(f);
+
+    directionsDisplay = new google.maps.DirectionsRenderer({
+      map: map
+    });
+
+    map.data.add(new google.maps.Data.Feature(
+      {geometry: new google.maps.LatLng({lat: 40.670242, lng: -73.951678}), id: 1, 
+      properties: {username: 'Julie', resource: 'A Blanket', description: 'Hi, I am Julie. I need a blanket for the winter'}}));
+    map.data.add(new google.maps.Data.Feature(
+      {geometry: new google.maps.LatLng({lat: 40.693552, lng: -73.98}), id: 2, 
+      properties: {username: 'Cute Girl', resource: 'School Suppliers', description: 'pencils, notebooks, rulers for kids to go to school. Thank you!'}}));
+    map.data.add(new google.maps.Data.Feature(
+      {geometry: new google.maps.LatLng({lat: 40.687949, lng:  -73.992877}), id: 3, 
+      properties: {username: 'Julie', resource: 'Clothes', description: 'Hi, I need some clothes for my 8 yr old boy'}}));
+    map.data.add(new google.maps.Data.Feature(
+      {geometry: new google.maps.LatLng({lat: 40.712415, lng:  -73.986182}), id: 4, 
+      properties: {username: 'Nathen', resource: 'Band Aid', description: 'band aid for my ankle'}}));
+    map.data.add(new google.maps.Data.Feature(
+      {geometry: new google.maps.LatLng({lat: 40.693414, lng:  -73.953566}), id: 5, 
+      properties: {username: 'Julie', resource: 'diaper', description: 'badly in need of diaper'}}));
+             
     var latLng = new google.maps.LatLng(52.201203, -1.724370);
     map.data.add({
         geometry: latLng,
         id: "Test feature",
         properties: {}
     });
-
-    console.log("get feature by id", map.data.getFeatureById("Test feature"));
-    // geoJson = {
-    // "type": "FeatureCollection",
-    // "features": [
-    //     {
-    //     "type": "Feature",
-    //     "properties": {
-    //     },
-    //     "geometry": {
-    //         "type": "Point",
-    //         "coordinates": [
-    //             40.691481, -73.968409
-    //         ]
-    //     }
-    //     },
-    //     {
-    //         "type": "Feature",
-    //         "properties": {
-    //         },
-    //         "geometry": {
-    //             "type": "Point",
-    //             "coordinates": [
-    //                 40.698606, -73.981756
-    //             ]
-    //         }
-    //         },
-    // ]
-    // };
-    // map.data.addGeoJson(geoJson)
+   
     map.data.setStyle(function() {
         return {
             icon: getCircle()
         };
     });
-
-    var infoWindow = new google.maps.InfoWindow({map: map});
+    map.data.addListener('click', function(e) {
+      showInfo(e, map, directionsDisplay);
+    });
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
@@ -139,14 +87,12 @@ function initMap() {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-        console.log("my curr location is ", pos);
         var marker = new google.maps.Marker({
                 position: pos,
                 map: map
         });
-        infoWindow.setPosition(pos);
-        infoWindow.setContent('Location found.');
         map.setCenter(pos);
+        directionsDisplay.setMap(map);
       }, function() {
         handleLocationError(true, infoWindow, map.getCenter());
       });

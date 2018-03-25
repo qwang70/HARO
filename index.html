@@ -16,9 +16,46 @@
         margin: 0;
         padding: 0;
       }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
     </style>
   </head>
   <body>
+    <div class="topnav">
+        <a href="#" class="pull-left">
+          <img src="https://projecthelping.org/wp-content/uploads/2017/01/Website-Logo-1.png" alt="Project Helping" width="80" height="50">
+        </a> 
+        <a class="active" href="#home">Relief Suppliers Request Map</a>
+        <a href="#news">History</a>
+        <a href="#contact">All Requests</a>
+      </div>
     <div id="map"></div>
     <script src="map.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCe4FY21-DdAigNV938UajjrPLlRP0t_4&callback=initMap&libraries=drawing"
