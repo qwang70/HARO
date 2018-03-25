@@ -4,7 +4,6 @@ import { registerUser } from '../actions'
 import {
   Form, FormControl, Col, FormGroup, ControlLabel, Button, PageHeader
 } from 'react-bootstrap'
-import { withRouter } from 'react-router-dom'
 
 class Register extends Component {
   constructor(props) {
@@ -89,7 +88,7 @@ class Register extends Component {
   }
 }
 
-const mapStateToProps = state => { }
+const mapStateToProps = state => {return {}}
 const mapDispatchToProps = dispatch => ({
   registerUser: userInfo => dispatch(registerUser(userInfo))
 })
